@@ -5,14 +5,19 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.ververica.cdc.connectors.mysql.MySQLSource;
 import com.alibaba.ververica.cdc.connectors.mysql.table.StartupOptions;
 import com.alibaba.ververica.cdc.debezium.DebeziumSourceFunction;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import org.apache.flink.api.common.functions.FilterFunction;
 import org.apache.flink.api.common.state.MapStateDescriptor;
 import org.apache.flink.streaming.api.datastream.*;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
+import org.apache.flink.streaming.connectors.kafka.KafkaSerializationSchema;
 import org.apache.flink.util.OutputTag;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import sinoocean.qw.bean.TableProcess;
+import sinoocean.qw.func.DimSink;
 import sinoocean.qw.func.MyDeserializationSchemaFunction;
+import sinoocean.qw.func.TableProcessFunction;
 import sinoocean.qw.util.MyKafkaUtil;
 
 /**
@@ -102,6 +107,26 @@ public class BaseDBApp {
 
         realDS.print(">>>>");
         dimDS.print("####");
+
+        //TODO 6.将侧输出流数据写入HBase(Phoenix)
+        hbaseDStream.print("hbase::::");
+        hbaseDStream.addSink(new DimSink());
+
+        //TODO 7.将主流数据写入Kafka
+        realDS.addSink(MyKafkaUtil.getKafkaSinkBySchema(
+                new KafkaSerializationSchema<JSONObject>() {
+                    @Override
+                    public ProducerRecord<byte[], byte[]> serialize(JSONObject jsonObj, @Nullable Long timestamp) {
+                        //获取保存到Kafka的哪一个主题中
+                        String topicName = jsonObj.getString("sink_table");
+                        //获取data数据
+                        JSONObject dataJsonObj = jsonObj.getJSONObject("data");
+                        return new ProducerRecord<>(topicName,dataJsonObj.toString().getBytes());
+                    }
+                }
+        ));
+
+
 
 
         env.execute();
