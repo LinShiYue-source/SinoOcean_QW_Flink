@@ -10,9 +10,13 @@ import org.apache.kafka.connect.data.Schema;
 import org.apache.kafka.connect.data.Struct;
 import org.apache.kafka.connect.source.SourceRecord;
 
+import com.alibaba.ververica.cdc.debezium.DebeziumDeserializationSchema;
+import io.debezium.data.Envelope;
+import org.apache.flink.api.common.typeinfo.TypeInformation;
+import org.apache.kafka.connect.source.SourceRecord;
 
 /**
- * Date : 2022-04-08 15:31:21
+ * Date : 2022-04-12 15:17:44
  * Description :
  */
 public class MyDeserializationSchemaFunction implements DebeziumDeserializationSchema<String> {

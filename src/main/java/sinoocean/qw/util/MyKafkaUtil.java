@@ -25,6 +25,25 @@ public class MyKafkaUtil {
         return new FlinkKafkaConsumer<String>(topic,new SimpleStringSchema(),prop);
     }
 
+
+
+    /**
+     *     封装Kafka消费者
+     * @param topic
+     * @param groupId
+     * @param flag 是否从头开始消费
+     * @return
+     */
+    public static FlinkKafkaConsumer<String> getKafkaSource(String topic,String groupId,String flag){
+        Properties prop = new Properties();
+        prop.setProperty(ConsumerConfig.GROUP_ID_CONFIG,groupId);
+        prop.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,kafkaServer);
+        if(flag == "true"){
+            prop.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG,"earliest");
+        }
+        return new FlinkKafkaConsumer<String>(topic,new SimpleStringSchema(),prop);
+    }
+
     //封装Kafka生产者
     public static FlinkKafkaProducer<String> getKafkaSink(String topic) {
         return new FlinkKafkaProducer<>(kafkaServer,topic,new SimpleStringSchema());

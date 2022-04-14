@@ -2,7 +2,7 @@ package sinoocean.qw.util;
 
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.beanutils.BeanUtils;
-import sinoocean.qw.common.GmallConfig;
+import sinoocean.qw.common.QWConfig;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -24,8 +24,8 @@ public class PhoenixUtil {
     public static void queryInit() {
         try {
             Class.forName("org.apache.phoenix.jdbc.PhoenixDriver");
-            conn = DriverManager.getConnection(GmallConfig.PHOENIX_SERVER);
-            conn.setSchema(GmallConfig.HBASE_SCHEMA);
+            conn = DriverManager.getConnection(QWConfig.PHOENIX_SERVER);
+            conn.setSchema(QWConfig.HBASE_SCHEMA);
         } catch (Exception e) {
             e.printStackTrace();
         }
