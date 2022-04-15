@@ -1,17 +1,18 @@
 package sinoocean.qw.func;
 
-import sinoocean.qw.common.GmallConfig;
 import com.alibaba.fastjson.JSONObject;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
-import java.sql.*;
+import sinoocean.qw.common.QWConfig;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.Set;
 
-import java.sql.DriverManager;
-
 /**
- * Date : 2022-04-11 09:51:26
+ * Date : 2022-04-14 09:45:38
  * Description :
  */
 public class DimSink extends RichSinkFunction<JSONObject> {
@@ -21,7 +22,7 @@ public class DimSink extends RichSinkFunction<JSONObject> {
     @Override
     public void open(Configuration parameters) throws Exception {
         Class.forName("org.apache.phoenix.jdbc.PhoenixDriver");
-        connection = DriverManager.getConnection(GmallConfig.PHOENIX_SERVER);
+        connection = DriverManager.getConnection(QWConfig.PHOENIX_SERVER);
     }
 
     /**
@@ -38,7 +39,7 @@ public class DimSink extends RichSinkFunction<JSONObject> {
         if (dataJsonObj != null && dataJsonObj.size() > 0) {
             String upsertSql = genUpsertSql(tableName.toUpperCase(), jsonObject.getJSONObject("data"));
             try {
-                System.out.println(upsertSql);
+                System.out.println("在维度表中写数据的sql"+upsertSql);
                 PreparedStatement ps = connection.prepareStatement(upsertSql);
                 ps.executeUpdate();
                 connection.commit();
@@ -52,8 +53,12 @@ public class DimSink extends RichSinkFunction<JSONObject> {
 
     public String genUpsertSql(String tableName, JSONObject jsonObject) {
         Set<String> fields = jsonObject.keySet();
-        String upsertSql = "upsert into " + GmallConfig.HBASE_SCHEMA + "." + tableName + "(" + StringUtils.join(fields, ",") + ")";
+        String upsertSql = "upsert into " + QWConfig.HBASE_SCHEMA + "." + tableName + "(" + StringUtils.join(fields, ",") + ")";
         String valuesSql = " values ('" + StringUtils.join(jsonObject.values(), "','") + "')";
         return upsertSql + valuesSql;
     }
 }
+
+
+
+

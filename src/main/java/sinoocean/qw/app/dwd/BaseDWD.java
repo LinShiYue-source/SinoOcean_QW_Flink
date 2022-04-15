@@ -26,7 +26,7 @@ import sinoocean.qw.util.MyKafkaUtil;
  * Date : 2022-04-11 16:28:11
  * Description :
  */
-public class BaseDBApp {
+public class BaseDWD {
     public static void main(String[] args) throws Exception {
         //TODO 1.基本环境准备
         //1.1创建流处理环境
@@ -56,7 +56,7 @@ public class BaseDBApp {
                 return jsonObject;
             }
         });
-        kafkaDS.print("kafka ODS层 ==》");
+//        kafkaDS.print("kafka ODS层 ==》");
         //2.3 可以进行数据的清洗操作
 
 
@@ -74,7 +74,7 @@ public class BaseDBApp {
                 .build();
 
         DataStreamSource<String> proDS = env.addSource(proFunction);
-        proDS.print("FlinkCDC 监控配置表 ==》");
+//        proDS.print("FlinkCDC 监控配置表 ==》");
 
 
         //3.2将配置表的流转换为广播流
@@ -94,10 +94,10 @@ public class BaseDBApp {
         DataStream<JSONObject> hbaseDS = processDS.getSideOutput(dimTag);
 
         processDS.print("分流后 事实表 ==》");
-        hbaseDS.print("分流后 维度表 ==》");
+//        hbaseDS.print("分流后 维度表 ==》");
 
         //TODO 6.将侧输出流数据写入HBase(Phoenix)
-        hbaseDS.print("DIM层写入维度表的数据");
+//        hbaseDS.print("DIM层写入维度表的数据");
         hbaseDS.addSink(new DimSink());
 
         //TODO 7.将主流数据写入Kafka
@@ -107,7 +107,7 @@ public class BaseDBApp {
                     public ProducerRecord<byte[], byte[]> serialize(JSONObject jsonObj, @Nullable Long timestamp) {
                         //获取保存到Kafka的哪一个主题中
                         String topicName = jsonObj.getString("sink_table");
-                        System.out.println("要写dwd层kafka的topic名 ==》 " + topicName);
+//                        System.out.println("要写dwd层kafka的topic名 ==》 " + topicName);
                         //获取data数据
                         JSONObject dataJsonObj = jsonObj.getJSONObject("data");
                         return new ProducerRecord<>(topicName,dataJsonObj.toString().getBytes());

@@ -1,14 +1,13 @@
 package sinoocean.qw.bean;
 
+import lombok.Data;
+
 /**
- * Date : 2022-04-08 15:27:28
+ * Date : 2022-04-12 15:12:39
  * Description :
  */
+@Data
 public class TableProcess {
-    //动态分流Sink常量   改为小写和脚本一致
-    public static final String SINK_TYPE_HBASE = "hbase";
-    public static final String SINK_TYPE_KAFKA = "kafka";
-    public static final String SINK_TYPE_CK = "clickhouse";
     //来源表
     String sourceTable;
     //操作类型 insert,update,delete

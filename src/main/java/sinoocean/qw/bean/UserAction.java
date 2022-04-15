@@ -2,18 +2,16 @@ package sinoocean.qw.bean;
 
 import lombok.Data;
 
-import java.util.Date;
-
 /**
- * Date : 2022-04-14 11:23:58
+ * Date : 2022-04-14 14:40:07
  * Description :
  */
 @Data
-public class UserLogin {
+public class UserAction {
     String id;
     String userName;
-    Integer departmentId;
+    Integer department_id;
     Integer gender;
-    Long loginTime;
-
+    Integer action_id;
+    Long actionTime;
 }
