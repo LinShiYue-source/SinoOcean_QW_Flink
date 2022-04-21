@@ -40,12 +40,12 @@ public class UniqueVisitApp {
         String sinkTopic = "dwm_unique_visit";
 
         //读取kafka数据
-        FlinkKafkaConsumer<String> source = MyKafkaUtil.getKafkaSource(sourceTopic, groupId, "true");
+        FlinkKafkaConsumer<String> source = MyKafkaUtil.getKafkaSource(sourceTopic, groupId,"true");
         DataStreamSource<String> kafkaStream = env.addSource(source);
 
         //对读取的数据进行结构的转换
         DataStream<JSONObject> jsonObjStream = kafkaStream.map(jsonString -> JSON.parseObject(jsonString));
-        jsonObjStream.print("Kafka DWD层用户登录数据流 ==》");
+//        jsonObjStream.print("Kafka DWD层用户登录数据流 ==》");
 
         //TODO 2.核心的过滤代码
         //按照用户id进行分组

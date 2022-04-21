@@ -2,20 +2,20 @@
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 
 <configuration>
-    <property>
-        <name>hbase.rootdir</name>
-        <value>hdfs://hadoop202:8020/hbase</value>
-    </property>
+<!--    <property>-->
+<!--        <name>hbase.rootdir</name>-->
+<!--        <value>hdfs://hadoop202:8020/hbase</value>-->
+<!--    </property>-->
 
-    <property>
-        <name>hbase.cluster.distributed</name>
-        <value>true</value>
-    </property>
+<!--    <property>-->
+<!--        <name>hbase.cluster.distributed</name>-->
+<!--        <value>true</value>-->
+<!--    </property>-->
 
-    <property>
-        <name>hbase.zookeeper.quorum</name>
-        <value>hadoop202,hadoop203,hadoop204</value>
-    </property>
+<!--    <property>-->
+<!--        <name>hbase.zookeeper.quorum</name>-->
+<!--        <value>hadoop202,hadoop203,hadoop204</value>-->
+<!--    </property>-->
 
     <property>
         <name>hbase.unsafe.stream.capability.enforce</name>

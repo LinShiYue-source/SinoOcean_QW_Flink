@@ -7,5 +7,5 @@ package sinoocean.qw.common;
 public class QWConfig {
     public static final String HBASE_SCHEMA="QW_REALTIME";
     public static final String PHOENIX_SERVER="jdbc:phoenix:192.168.88.102:2181";
-    public static final String CLICKHOUSE_URL="jdbc:clickhouse://hadoop102:8123/default";
+    public static final String CLICKHOUSE_URL="jdbc:clickhouse://10.0.24.116:8123/qw_realtime";
 }

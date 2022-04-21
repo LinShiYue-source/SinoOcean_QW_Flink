@@ -31,8 +31,8 @@ public class BaseODS {
                 .databaseList("qw_realtime")
                 .tableList("qw_realtime.action_type", "qw_realtime.department", "qw_realtime.user_action", "qw_realtime.user_login")
                 .deserializer(new MyDeserializationSchemaFunction())
-                .startupOptions(StartupOptions.initial()) // 监控全部binlog  包括历史的
-//                .startupOptions(StartupOptions.latest())  //增量监控binlog
+               .startupOptions(StartupOptions.initial()) // 监控全部binlog  包括历史的
+             //   .startupOptions(StartupOptions.latest())  //增量监控binlog
                 .build();
 
         DataStreamSource<String> mysqlDS = env.addSource(sourceFunction);

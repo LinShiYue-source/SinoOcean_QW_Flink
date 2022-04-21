@@ -11,19 +11,21 @@ import lombok.Data;
 @AllArgsConstructor
 public class UserApp {
     //事实表字段
-    String id;
-    String userName;
+//    String id;
+//    String userName;
     Integer department_id;
-    Integer gender;
-    Integer action_id;
-    Long actionTime;
+//    Integer gender;
+//    Integer action_id;
+//    Long actionTime;
     Long loginTime;
+
     //维度表字段
-    String actionName;
+//    String actionName;
     String departmentName;
-    //来电次数
-    Long dianCount;
-    //来访次数
-    Long fangCout;
+
+    //具体指标
+    Long uvCount; //日活跃量
+//    Long dianCount;    //来电次数
+//    Long fangCout;    //来访次数
 
 }

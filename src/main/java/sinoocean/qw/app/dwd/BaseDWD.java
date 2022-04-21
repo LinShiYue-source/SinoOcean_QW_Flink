@@ -69,8 +69,7 @@ public class BaseDWD {
                 .databaseList("qw_realtime")
                 .tableList("qw_realtime.table_process")
                 .deserializer(new MyDeserializationSchemaFunction())
-//                .startupOptions(StartupOptions.initial()) // 监控全部binlog  包括历史的
-                .startupOptions(StartupOptions.initial())  //增量监控binlog
+                .startupOptions(StartupOptions.initial()) // 监控全部binlog  包括历史的
                 .build();
 
         DataStreamSource<String> proDS = env.addSource(proFunction);
